@@ -17,7 +17,7 @@ import type {
   HandlerInterface,
   MergePath,
   MergeSchemaPath,
-  MiddlewareHandler,
+  InternalMiddlewareHandler,
   MiddlewareHandlerInterface,
   Next,
   NotFoundHandler,
@@ -154,7 +154,7 @@ class Hono<
     }
 
     // Implementation of app.use(...handlers[]) or app.use(path, ...handlers[])
-    this.use = (arg1: string | MiddlewareHandler<any>, ...handlers: MiddlewareHandler<any>[]) => {
+    this.use = (arg1: string | InternalMiddlewareHandler<any>, ...handlers: InternalMiddlewareHandler<any>[]) => {
       if (typeof arg1 === 'string') {
         this.#path = arg1
       } else {
@@ -369,7 +369,7 @@ class Hono<
       }
     })()
 
-    const handler: MiddlewareHandler = async (c, next) => {
+    const handler: InternalMiddlewareHandler = async (c, next) => {
       const res = await applicationHandler(replaceRequest(c.req.raw), ...getOptions(c))
 
       if (res) {

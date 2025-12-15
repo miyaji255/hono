@@ -23,7 +23,7 @@ export type {
   Env,
   ErrorHandler,
   Handler,
-  MiddlewareHandler,
+  InternalMiddlewareHandler as MiddlewareHandler,
   Next,
   NotFoundResponse,
   NotFoundHandler,

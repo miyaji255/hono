@@ -5,7 +5,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Context } from '../../context'
-import type { MiddlewareHandler, TypedResponse } from '../../types'
+import type { InternalMiddlewareHandler, TypedResponse } from '../../types'
 import type { StatusCode } from '../../utils/http-status'
 
 /**
@@ -25,7 +25,7 @@ export interface UpgradeWebSocket<T = unknown, U = any, _WSEvents = WSEvents<T>>
   (
     createEvents: (c: Context) => _WSEvents | Promise<_WSEvents>,
     options?: U
-  ): MiddlewareHandler<
+  ): InternalMiddlewareHandler<
     any,
     string,
     {

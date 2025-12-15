@@ -9,7 +9,7 @@ import { html, raw } from '../../helper/html'
 import { Fragment, createContext, jsx, useContext } from '../../jsx'
 import type { FC, Context as JSXContext, JSXNode, PropsWithChildren } from '../../jsx'
 import { renderToReadableStream } from '../../jsx/streaming'
-import type { Env, Input, MiddlewareHandler } from '../../types'
+import type { Env, Input, InternalMiddlewareHandler } from '../../types'
 import type { HtmlEscapedString } from '../../utils/html'
 
 export const RequestContext: JSXContext<Context<any, any, {}> | null> =
@@ -82,7 +82,7 @@ const createRenderer =
  * @param {RendererOptions} [options] - The options for the JSX renderer middleware.
  * @param {boolean | string} [options.docType=true] - The DOCTYPE to be added at the beginning of the HTML. If set to false, no DOCTYPE will be added.
  * @param {boolean | Record<string, string>} [options.stream=false] - If set to true, enables streaming response with default headers. If a record is provided, custom headers will be used.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -110,7 +110,7 @@ const createRenderer =
 export const jsxRenderer = (
   component?: ComponentWithChildren,
   options?: RendererOptions
-): MiddlewareHandler =>
+): InternalMiddlewareHandler =>
   function jsxRenderer(c, next) {
     const Layout = (c.getLayout() ?? Fragment) as FC
     if (component) {

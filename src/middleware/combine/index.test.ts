@@ -1,8 +1,8 @@
 import { Hono } from '../../hono'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import { every, except, some } from '.'
 
-const nextMiddleware: MiddlewareHandler = async (_, next) => await next()
+const nextMiddleware: InternalMiddlewareHandler = async (_, next) => await next()
 
 describe('some', () => {
   let app: Hono
@@ -93,7 +93,7 @@ describe('some', () => {
   })
 
   it('Should not call skipped middleware even if an error is thrown', async () => {
-    const middleware1: MiddlewareHandler = async (c, next) => {
+    const middleware1: InternalMiddlewareHandler = async (c, next) => {
       await next()
     }
     const middleware2 = vi.fn(() => true)
@@ -194,7 +194,7 @@ describe('every', () => {
   })
 
   it('Should return the same response a middleware returns if it short-circuits the chain', async () => {
-    const middleware1: MiddlewareHandler = async (c) => {
+    const middleware1: InternalMiddlewareHandler = async (c) => {
       return c.text('Hello Middleware 1')
     }
     const middleware2 = vi.fn(nextMiddleware)
@@ -212,7 +212,7 @@ describe('every', () => {
   it('Should pass the path params to middlewares', async () => {
     const app = new Hono()
     app.use('*', nextMiddleware)
-    const paramMiddleware: MiddlewareHandler = async (c) => {
+    const paramMiddleware: InternalMiddlewareHandler = async (c) => {
       return c.json(c.req.param(), 200)
     }
 

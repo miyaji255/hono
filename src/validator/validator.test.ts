@@ -10,7 +10,7 @@ import type {
   ExtractSchema,
   ExtractSchemaForStatusCode,
   FormValue,
-  MiddlewareHandler,
+  InternalMiddlewareHandler,
   TypedResponse,
   ValidationTargets,
 } from '../types'
@@ -53,7 +53,7 @@ const zodValidator = <
 
   type ResponseType = InferValidatorResponse<typeof validationFunc>
 
-  return validator(target, validationFunc) as MiddlewareHandler<
+  return validator(target, validationFunc) as InternalMiddlewareHandler<
     E,
     P,
     { in: { [K in Target]: z.input<T> }; out: { [K in Target]: z.output<T> } },

@@ -5,7 +5,7 @@
 
 import type { Context } from '../../context'
 import { HTTPException } from '../../http-exception'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 const ERROR_MESSAGE = 'Payload Too Large'
 
@@ -30,7 +30,7 @@ class BodyLimitError extends Error {
  * @param {BodyLimitOptions} options - The options for the body limit middleware.
  * @param {number} options.maxSize - The maximum body size allowed.
  * @param {OnError} [options.onError] - The error handler to be invoked if the specified body size is exceeded.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -54,7 +54,7 @@ class BodyLimitError extends Error {
  * )
  * ```
  */
-export const bodyLimit = (options: BodyLimitOptions): MiddlewareHandler => {
+export const bodyLimit = (options: BodyLimitOptions): InternalMiddlewareHandler => {
   const onError: OnError =
     options.onError ||
     (() => {

@@ -4,7 +4,7 @@
  */
 import type { Context } from '../../context'
 import { setCookie, getCookie } from '../../helper/cookie'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import { parseAccept } from '../../utils/accept'
 
 export type DetectorType = 'path' | 'querystring' | 'cookie' | 'header'
@@ -262,7 +262,7 @@ const detectLanguage = (c: Context, options: DetectorOptions): string => {
  * @param userOptions Configuration options for the language detector
  * @returns Hono middleware function
  */
-export const languageDetector = (userOptions: Partial<DetectorOptions>): MiddlewareHandler => {
+export const languageDetector = (userOptions: Partial<DetectorOptions>): InternalMiddlewareHandler => {
   const options: DetectorOptions = {
     ...DEFAULT_OPTIONS,
     ...userOptions,

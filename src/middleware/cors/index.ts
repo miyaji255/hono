@@ -4,7 +4,7 @@
  */
 
 import type { Context } from '../../context'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 type CORSOptions = {
   origin:
@@ -33,7 +33,7 @@ type CORSOptions = {
  * @param {number} [options.maxAge] - The value of "Access-Control-Max-Age" CORS header.
  * @param {boolean} [options.credentials] - The value of "Access-Control-Allow-Credentials" CORS header.
  * @param {string[]} [options.exposeHeaders=[]] - The value of "Access-Control-Expose-Headers" CORS header.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -60,7 +60,7 @@ type CORSOptions = {
  * })
  * ```
  */
-export const cors = (options?: CORSOptions): MiddlewareHandler => {
+export const cors = (options?: CORSOptions): InternalMiddlewareHandler => {
   const defaults: CORSOptions = {
     origin: '*',
     allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH'],

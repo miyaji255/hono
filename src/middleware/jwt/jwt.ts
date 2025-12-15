@@ -6,7 +6,7 @@
 import type { Context } from '../../context'
 import { getCookie, getSignedCookie } from '../../helper/cookie'
 import { HTTPException } from '../../http-exception'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import type { CookiePrefixOptions } from '../../utils/cookie'
 import { Jwt } from '../../utils/jwt'
 import '../../context'
@@ -30,7 +30,7 @@ export type JwtVariables<T = any> = {
  * @param {SignatureAlgorithm} [options.alg=HS256] - An algorithm type that is used for verifying. Available types are `HS256` | `HS384` | `HS512` | `RS256` | `RS384` | `RS512` | `PS256` | `PS384` | `PS512` | `ES256` | `ES384` | `ES512` | `EdDSA`.
  * @param {string} [options.headerName='Authorization'] - The name of the header to look for the JWT token. Default is 'Authorization'.
  * @param {VerifyOptions} [options.verification] - Additional options for JWT payload verification.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -57,7 +57,7 @@ export const jwt = (options: {
   alg?: SignatureAlgorithm
   headerName?: string
   verification?: VerifyOptions
-}): MiddlewareHandler => {
+}): InternalMiddlewareHandler => {
   const verifyOpts = options.verification || {}
 
   if (!options || !options.secret) {

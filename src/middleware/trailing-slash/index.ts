@@ -3,14 +3,14 @@
  * Trailing Slash Middleware for Hono.
  */
 
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 /**
  * Trailing Slash Middleware for Hono.
  *
  * @see {@link https://hono.dev/docs/middleware/builtin/trailing-slash}
  *
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -20,7 +20,7 @@ import type { MiddlewareHandler } from '../../types'
  * app.get('/about/me/', (c) => c.text('With Trailing Slash'))
  * ```
  */
-export const trimTrailingSlash = (): MiddlewareHandler => {
+export const trimTrailingSlash = (): InternalMiddlewareHandler => {
   return async function trimTrailingSlash(c, next) {
     await next()
 
@@ -44,7 +44,7 @@ export const trimTrailingSlash = (): MiddlewareHandler => {
  *
  * @see {@link https://hono.dev/docs/middleware/builtin/trailing-slash}
  *
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -53,7 +53,7 @@ export const trimTrailingSlash = (): MiddlewareHandler => {
  * app.use(appendTrailingSlash())
  * ```
  */
-export const appendTrailingSlash = (): MiddlewareHandler => {
+export const appendTrailingSlash = (): InternalMiddlewareHandler => {
   return async function appendTrailingSlash(c, next) {
     await next()
 

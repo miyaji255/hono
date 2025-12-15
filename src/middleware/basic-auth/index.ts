@@ -5,7 +5,7 @@
 
 import type { Context } from '../../context'
 import { HTTPException } from '../../http-exception'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import { auth } from '../../utils/basic-auth'
 import { timingSafeEqual } from '../../utils/buffer'
 
@@ -38,7 +38,7 @@ type BasicAuthOptions =
  * @param {Function} [options.hashFunction] - The hash function used for secure comparison.
  * @param {Function} [options.verifyUser] - The function to verify user credentials.
  * @param {string | object | MessageFunction} [options.invalidUserMessage="Unauthorized"] - The invalid user message.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  * @throws {HTTPException} If neither "username and password" nor "verifyUser" options are provided.
  *
  * @example
@@ -61,7 +61,7 @@ type BasicAuthOptions =
 export const basicAuth = (
   options: BasicAuthOptions,
   ...users: { username: string; password: string }[]
-): MiddlewareHandler => {
+): InternalMiddlewareHandler => {
   const usernamePasswordInOptions = 'username' in options && 'password' in options
   const verifyUserInOptions = 'verifyUser' in options
 

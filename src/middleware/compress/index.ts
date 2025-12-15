@@ -3,7 +3,7 @@
  * Compress Middleware for Hono.
  */
 
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import { COMPRESSIBLE_CONTENT_TYPE_REGEX } from '../../utils/compress'
 
 const ENCODING_TYPES = ['gzip', 'deflate'] as const
@@ -22,7 +22,7 @@ interface CompressionOptions {
  * @param {CompressionOptions} [options] - The options for the compress middleware.
  * @param {'gzip' | 'deflate'} [options.encoding] - The compression scheme to allow for response compression. Either 'gzip' or 'deflate'. If not defined, both are allowed and will be used based on the Accept-Encoding header. 'gzip' is prioritized if this option is not provided and the client provides both in the Accept-Encoding header.
  * @param {number} [options.threshold=1024] - The minimum size in bytes to compress. Defaults to 1024 bytes.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -31,7 +31,7 @@ interface CompressionOptions {
  * app.use(compress())
  * ```
  */
-export const compress = (options?: CompressionOptions): MiddlewareHandler => {
+export const compress = (options?: CompressionOptions): InternalMiddlewareHandler => {
   const threshold = options?.threshold ?? 1024
 
   return async function compress(ctx, next) {

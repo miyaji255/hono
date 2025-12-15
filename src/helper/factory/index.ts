@@ -12,7 +12,9 @@ import type {
   HandlerResponse,
   Input,
   IntersectNonAnyTypes,
+  InternalMiddlewareHandler,
   MiddlewareHandler,
+  Variables,
 } from '../../types'
 
 type InitApp<E extends Env = Env> = (app: Hono<E>) => void
@@ -351,8 +353,8 @@ export class Factory<E extends Env = Env, P extends string = string> {
   }
 
   createMiddleware = <I extends Input = {}, R extends HandlerResponse<any> | void = void>(
-    middleware: MiddlewareHandler<E, P, I, R extends void ? Response : R>
-  ): MiddlewareHandler<E, P, I, R extends void ? Response : R> => middleware
+    middleware: InternalMiddlewareHandler<E, P, I, R extends void ? Response : R>
+  ): InternalMiddlewareHandler<E, P, I, R extends void ? Response : R> => middleware
 
   createHandlers: CreateHandlersInterface<E, P> = (...handlers: any) => {
     // @ts-expect-error this should not be typed
@@ -370,6 +372,7 @@ export const createMiddleware = <
   P extends string = string,
   I extends Input = {},
   R extends HandlerResponse<any> | void = void,
+  A extends Variables = {},
 >(
-  middleware: MiddlewareHandler<E, P, I, R extends void ? Response : R>
-): MiddlewareHandler<E, P, I, R extends void ? Response : R> => middleware
+  middleware: InternalMiddlewareHandler<E, P, I, R extends void ? Response : R, A>
+): MiddlewareHandler<A, E, P, I, R extends void ? Response : R > => middleware as any

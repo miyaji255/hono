@@ -4,7 +4,7 @@
  */
 
 import type { Context } from '../../context'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import { encodeBase64 } from '../../utils/encode'
 import type { PermissionsPolicyDirective } from './permissions-policy'
 
@@ -168,7 +168,7 @@ export const NONCE: ContentSecurityPolicyOptionHandler = (ctx) => {
  * @param {overridableHeader} [customOptions.xXssProtection=true] - Settings for the X-XSS-Protection header.
  * @param {boolean} [customOptions.removePoweredBy=true] - Settings for remove X-Powered-By header.
  * @param {PermissionsPolicyOptions} [customOptions.permissionsPolicy] - Settings for the Permissions-Policy header.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -176,7 +176,7 @@ export const NONCE: ContentSecurityPolicyOptionHandler = (ctx) => {
  * app.use(secureHeaders())
  * ```
  */
-export const secureHeaders = (customOptions?: SecureHeadersOptions): MiddlewareHandler => {
+export const secureHeaders = (customOptions?: SecureHeadersOptions): InternalMiddlewareHandler => {
   const options = { ...DEFAULT_OPTIONS, ...customOptions }
   const headersToSet = getFilteredHeaders(options)
   const callbacks: SecureHeadersCallback[] = []

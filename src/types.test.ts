@@ -14,6 +14,7 @@ import type {
   InputToDataByTarget,
   MergePath,
   MergeSchemaPath,
+  InternalMiddlewareHandler,
   MiddlewareHandler,
   ParamKeyToRecord,
   ParamKeys,
@@ -55,7 +56,7 @@ describe('HandlerInterface', () => {
 
   describe('no path pattern', () => {
     const app = new Hono<Env>()
-    const middleware: MiddlewareHandler<
+    const middleware: InternalMiddlewareHandler<
       Env,
       '/',
       {
@@ -108,7 +109,7 @@ describe('HandlerInterface', () => {
 
   describe('path pattern', () => {
     const app = new Hono<Env>()
-    const middleware: MiddlewareHandler<
+    const middleware: InternalMiddlewareHandler<
       Env,
       '/foo',
       { in: { json: Payload }; out: { json: Payload } },
@@ -149,7 +150,7 @@ describe('HandlerInterface', () => {
 
   describe('With path parameters', () => {
     const app = new Hono<Env>()
-    const middleware: MiddlewareHandler<Env, '/post/:id', {}, never> = async (_c, next) => {
+    const middleware: InternalMiddlewareHandler<Env, '/post/:id', {}, never> = async (_c, next) => {
       await next()
     }
     it('Should have the `param` type', () => {
@@ -286,7 +287,7 @@ describe('HandlerInterface', () => {
 describe('OnHandlerInterface', () => {
   const app = new Hono()
   test('Context', () => {
-    const middleware: MiddlewareHandler<
+    const middleware: InternalMiddlewareHandler<
       Env,
       '/purge',
       { in: { form: { id: string } }; out: { form: { id: number } } }
@@ -321,7 +322,7 @@ describe('OnHandlerInterface', () => {
   })
 
   test('app.on(method[], path, middleware, handler)', () => {
-    const middleware: MiddlewareHandler<{ Variables: { foo: string } }> = async () => {}
+    const middleware: InternalMiddlewareHandler<{ Variables: { foo: string } }> = async () => {}
     const route = app.on(['GET', 'POST'], '/multi-method', middleware, (c) => {
       return c.json({ success: true })
     })
@@ -350,7 +351,7 @@ describe('OnHandlerInterface', () => {
   })
 
   test('app.on(method, path[], middleware, handler) should not throw a type error', () => {
-    const middleware: MiddlewareHandler<{ Variables: { foo: string } }> = async () => {}
+    const middleware: InternalMiddlewareHandler<{ Variables: { foo: string } }> = async () => {}
     app.on('GET', ['/a', '/b'], middleware, (c) => {
       expectTypeOf(c.var.foo).toEqualTypeOf<string>()
       return c.json({})
@@ -1902,10 +1903,9 @@ describe('ContextVariableMap type tests', () => {
   })
 
   it('Should override ContextVariableMap with env variables', () => {
-    const middleware = createMiddleware<{
-      Variables: {
-        payload: number
-      }
+    const middleware = createMiddleware< {
+    }, string, {}, void, {
+      payload: number
     }>(async (c, next) => {
       c.set('payload', 123)
       await next()
@@ -1995,8 +1995,13 @@ describe('Env types with validator as first middleware - test only types', () =>
 describe('Env types with `use` middleware - test only types', () => {
   const app = new Hono()
 
-  const mw1 = createMiddleware<{ Variables: { foo1: string } }>(async () => {})
-  const mw2 = createMiddleware<{ Variables: { foo2: string } }>(async () => {})
+  const mw1 = createMiddleware<{}, string, {}, void, { foo1: string }>(async () => {})
+  const mw2 = createMiddleware<{ Variables: { foo1: string } }, string, {}, void, { foo2: string}>(async () => {})
+  // declare const mw1: MiddlewareHandler< { foo1: string }>
+  // declare const mw2: MiddlewareHandler<
+  // { foo2: string },
+  //   { Variables: { foo1: string } }
+  // >
 
   it('Should not throw a type error', () => {
     app

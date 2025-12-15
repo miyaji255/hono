@@ -2,7 +2,7 @@
  * @module
  * Powered By Middleware for Hono.
  */
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 type PoweredByOptions = {
   /**
@@ -16,7 +16,7 @@ type PoweredByOptions = {
  * Powered By Middleware for Hono.
  *
  * @param options - The options for the Powered By Middleware.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -27,7 +27,7 @@ type PoweredByOptions = {
  * app.use(poweredBy()) // With options: poweredBy({ serverName: "My Server" })
  * ```
  */
-export const poweredBy = (options?: PoweredByOptions): MiddlewareHandler => {
+export const poweredBy = (options?: PoweredByOptions): InternalMiddlewareHandler => {
   return async function poweredBy(c, next) {
     await next()
     c.res.headers.set('X-Powered-By', options?.serverName ?? 'Hono')

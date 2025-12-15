@@ -4,7 +4,7 @@
  */
 
 import type { Context } from '../../context'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 export type RequestIdVariables = {
   requestId: string
@@ -24,7 +24,7 @@ export type RequestIdOptions = {
  * @param {string} [options.headerName=X-Request-Id] - The header name used in request id.
  * @param {generator} [options.generator=() => crypto.randomUUID()] - The request id generation function.
  *
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -42,7 +42,7 @@ export const requestId = ({
   limitLength = 255,
   headerName = 'X-Request-Id',
   generator = () => crypto.randomUUID(),
-}: RequestIdOptions = {}): MiddlewareHandler => {
+}: RequestIdOptions = {}): InternalMiddlewareHandler => {
   return async function requestId(c, next) {
     // If `headerName` is empty string, req.header will return the object
     let reqId = headerName ? c.req.header(headerName) : undefined

@@ -1,7 +1,7 @@
 import { Context } from '../../context'
 import type { Hono } from '../../hono'
 import { HTTPException } from '../../http-exception'
-import type { BlankSchema, Env, Input, MiddlewareHandler, Schema } from '../../types'
+import type { BlankSchema, Env, Input, InternalMiddlewareHandler, Schema } from '../../types'
 
 // Ref: https://github.com/cloudflare/workerd/blob/main/types/defines/pages.d.ts
 
@@ -47,7 +47,7 @@ export const handle =
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function handleMiddleware<E extends Env = {}, P extends string = any, I extends Input = {}>(
-  middleware: MiddlewareHandler<
+  middleware: InternalMiddlewareHandler<
     E & {
       Bindings: {
         eventContext: EventContext
@@ -111,7 +111,7 @@ declare abstract class FetcherLike {
  * https://developers.cloudflare.com/pages/platform/functions/advanced-mode/#set-up-a-function
  *
  */
-export const serveStatic = (): MiddlewareHandler => {
+export const serveStatic = (): InternalMiddlewareHandler => {
   return async (c) => {
     const env = c.env as { ASSETS: FetcherLike }
     const res = await env.ASSETS.fetch(c.req.raw)

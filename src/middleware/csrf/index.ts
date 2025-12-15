@@ -5,7 +5,7 @@
 
 import type { Context } from '../../context'
 import { HTTPException } from '../../http-exception'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 type IsAllowedOriginHandler = (origin: string, context: Context) => boolean | Promise<boolean>
 
@@ -50,7 +50,7 @@ const isRequestedByFormElementRe =
  *   - string[]: Multiple allowed values (e.g., ['same-origin', 'same-site'])
  *   - function: Custom validation with access to context
  *   - Default: Only allows 'same-origin'
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -91,7 +91,7 @@ const isRequestedByFormElementRe =
  * }))
  * ```
  */
-export const csrf = (options?: CSRFOptions): MiddlewareHandler => {
+export const csrf = (options?: CSRFOptions): InternalMiddlewareHandler => {
   const originHandler: IsAllowedOriginHandler = ((optsOrigin) => {
     if (!optsOrigin) {
       return (origin, c) => origin === new URL(c.req.url).origin

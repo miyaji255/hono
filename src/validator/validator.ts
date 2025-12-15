@@ -1,7 +1,7 @@
 import type { Context } from '../context'
 import { getCookie } from '../helper/cookie'
 import { HTTPException } from '../http-exception'
-import type { Env, MiddlewareHandler, TypedResponse, ValidationTargets, FormValue } from '../types'
+import type { Env, InternalMiddlewareHandler, TypedResponse, ValidationTargets, FormValue } from '../types'
 import type { BodyData } from '../utils/body'
 import { bufferToFormData } from '../utils/buffer'
 
@@ -84,7 +84,7 @@ export const validator = <
 >(
   target: U,
   validationFunc: VF
-): MiddlewareHandler<E, P, V, ExtractValidationResponse<VF>> => {
+): InternalMiddlewareHandler<E, P, V, ExtractValidationResponse<VF>> => {
   return async (c, next) => {
     let value = {}
     const contentType = c.req.header('Content-Type')

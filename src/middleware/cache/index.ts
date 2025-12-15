@@ -4,7 +4,7 @@
  */
 
 import type { Context } from '../../context'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import type { StatusCode } from '../../utils/http-status'
 
 /**
@@ -32,7 +32,7 @@ const shouldSkipCache = (res: Response) => {
  * @param {string | string[]} [options.vary] - Sets the `Vary` header in the response. If the original response header already contains a `Vary` header, the values are merged, removing any duplicates.
  * @param {Function} [options.keyGenerator] - Generates keys for every request in the `cacheName` store. This can be used to cache data based on request parameters or context parameters.
  * @param {number[]} [options.cacheableStatusCodes=[200]] - An array of status codes that can be cached.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  * @throws {Error} If the `vary` option includes "*".
  *
  * @example
@@ -53,7 +53,7 @@ export const cache = (options: {
   vary?: string | string[]
   keyGenerator?: (c: Context) => Promise<string> | string
   cacheableStatusCodes?: StatusCode[]
-}): MiddlewareHandler => {
+}): InternalMiddlewareHandler => {
   if (!globalThis.caches) {
     console.log('Cache Middleware is not enabled because caches is not defined.')
     return async (_c, next) => await next()

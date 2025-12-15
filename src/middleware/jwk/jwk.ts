@@ -6,7 +6,7 @@
 import type { Context } from '../../context'
 import { getCookie, getSignedCookie } from '../../helper/cookie'
 import { HTTPException } from '../../http-exception'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import type { CookiePrefixOptions } from '../../utils/cookie'
 import { Jwt } from '../../utils/jwt'
 import '../../context'
@@ -26,7 +26,7 @@ import type { VerifyOptions } from '../../utils/jwt/jwt'
  * @param {string} [options.headerName='Authorization'] - The name of the header to look for the JWT token. Default is 'Authorization'.
  * @param {RequestInit} [init] - Optional init options for the `fetch` request when retrieving JWKS from a URI.
  * @param {VerifyOptions} [options.verification] - Additional options for JWK payload verification.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -57,7 +57,7 @@ export const jwk = (
     verification?: VerifyOptions
   },
   init?: RequestInit
-): MiddlewareHandler => {
+): InternalMiddlewareHandler => {
   const verifyOpts = options.verification || {}
 
   if (!options || !(options.keys || options.jwks_uri)) {

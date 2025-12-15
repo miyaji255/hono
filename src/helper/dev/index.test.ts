@@ -1,9 +1,9 @@
 import { Hono } from '../../hono'
 import { RegExpRouter } from '../../router/reg-exp-router'
-import type { Handler, MiddlewareHandler } from '../../types'
+import type { Handler, InternalMiddlewareHandler } from '../../types'
 import { getRouterName, inspectRoutes, showRoutes } from '.'
 
-const namedMiddleware: MiddlewareHandler = (_, next) => next()
+const namedMiddleware: InternalMiddlewareHandler = (_, next) => next()
 const namedHandler: Handler = (c) => c.text('hi')
 const app = new Hono()
   .use('*', (c, next) => next())

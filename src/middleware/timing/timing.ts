@@ -4,7 +4,7 @@
  */
 
 import type { Context } from '../../context'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import '../../context'
 
 export type TimingVariables = {
@@ -45,7 +45,7 @@ const getTime = (): number => {
  * @param {string} [config.totalDescription=Total Response Time] - Description for the total response time.
  * @param {boolean} [config.autoEnd=true] - If `startTime()` should end automatically at the end of the request.
  * @param {boolean | string | ((c: Context) => boolean | string)} [config.crossOrigin=false] - The origin this timings header should be readable.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -73,7 +73,7 @@ const getTime = (): number => {
  * });
  * ```
  */
-export const timing = (config?: TimingOptions): MiddlewareHandler => {
+export const timing = (config?: TimingOptions): InternalMiddlewareHandler => {
   const options: TimingOptions = {
     total: true,
     enabled: true,

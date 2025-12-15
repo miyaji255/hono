@@ -4,7 +4,7 @@
  */
 
 import type { Context, Data } from '../../context'
-import type { Env, MiddlewareHandler } from '../../types'
+import type { Env, InternalMiddlewareHandler } from '../../types'
 import { COMPRESSIBLE_CONTENT_TYPE_REGEX } from '../../utils/compress'
 import { getMimeType } from '../../utils/mime'
 import { defaultJoin } from './path'
@@ -45,7 +45,7 @@ export const serveStatic = <E extends Env = Env>(
     pathResolve?: (path: string) => string
     isDir?: (path: string) => boolean | undefined | Promise<boolean | undefined>
   }
-): MiddlewareHandler => {
+): InternalMiddlewareHandler => {
   const root = options.root ?? './'
   const optionPath = options.path
   const join = options.join ?? defaultJoin

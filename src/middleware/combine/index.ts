@@ -7,7 +7,7 @@ import { compose } from '../../compose'
 import type { Context } from '../../context'
 import { METHOD_NAME_ALL } from '../../router'
 import { TrieRouter } from '../../router/trie-router'
-import type { MiddlewareHandler, Next } from '../../types'
+import type { InternalMiddlewareHandler, Next } from '../../types'
 
 type Condition = (c: Context) => boolean
 
@@ -35,7 +35,7 @@ type Condition = (c: Context) => boolean
  * ));
  * ```
  */
-export const some = (...middleware: (MiddlewareHandler | Condition)[]): MiddlewareHandler => {
+export const some = (...middleware: (InternalMiddlewareHandler | Condition)[]): InternalMiddlewareHandler => {
   return async function some(c, next) {
     let isNextCalled = false
     const wrappedNext = () => {
@@ -96,7 +96,7 @@ export const some = (...middleware: (MiddlewareHandler | Condition)[]): Middlewa
  * ));
  * ```
  */
-export const every = (...middleware: (MiddlewareHandler | Condition)[]): MiddlewareHandler => {
+export const every = (...middleware: (InternalMiddlewareHandler | Condition)[]): InternalMiddlewareHandler => {
   return async function every(c, next) {
     const currentRouteIndex = c.req.routeIndex
     await compose(
@@ -140,8 +140,8 @@ export const every = (...middleware: (MiddlewareHandler | Condition)[]): Middlew
  */
 export const except = (
   condition: string | Condition | (string | Condition)[],
-  ...middleware: MiddlewareHandler[]
-): MiddlewareHandler => {
+  ...middleware: InternalMiddlewareHandler[]
+): InternalMiddlewareHandler => {
   let router: TrieRouter<true> | undefined = undefined
   const conditions = (Array.isArray(condition) ? condition : [condition])
     .map((condition) => {

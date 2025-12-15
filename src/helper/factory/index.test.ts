@@ -3,7 +3,7 @@ import { expectTypeOf } from 'vitest'
 import { hc } from '../../client'
 import type { ClientRequest } from '../../client/types'
 import { Hono } from '../../index'
-import type { Env, ExtractSchema, H, MiddlewareHandler, ToSchema, TypedResponse } from '../../types'
+import type { Env, ExtractSchema, H, InternalMiddlewareHandler, ToSchema, TypedResponse } from '../../types'
 import type { ContentfulStatusCode } from '../../utils/http-status'
 import type { Equal, Expect } from '../../utils/types'
 import { validator } from '../../validator'
@@ -68,7 +68,7 @@ describe('createMiddleware', () => {
     const middleware = createMiddleware(async (c, next) => {
       await next()
     })
-    type Expected = MiddlewareHandler<any, string, {}, Response>
+    type Expected = InternalMiddlewareHandler<any, string, {}, Response>
     type _verify = Expect<Equal<Expected, typeof middleware>>
   })
 })
@@ -402,7 +402,7 @@ describe('createFactory', () => {
       const middleware = factory.createMiddleware(async (c, next) => {
         await next()
       })
-      type Expected = MiddlewareHandler<Env, string, {}, Response>
+      type Expected = InternalMiddlewareHandler<Env, string, {}, Response>
       type _verify = Expect<Equal<Expected, typeof middleware>>
     })
   })

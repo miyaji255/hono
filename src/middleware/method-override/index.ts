@@ -5,7 +5,7 @@
 
 import type { Context, ExecutionContext } from '../../context'
 import type { Hono } from '../../hono'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import { parseBody } from '../../utils/body'
 
 type MethodOverrideOptions = {
@@ -42,7 +42,7 @@ const DEFAULT_METHOD_FORM_NAME = '_method'
  * @param {string} [options.form=_method] - Form key with a value containing the method name.
  * @param {string} [options.header] - Header name with a value containing the method name.
  * @param {string} [options.query] - Query parameter key with a value containing the method name.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -57,7 +57,7 @@ const DEFAULT_METHOD_FORM_NAME = '_method'
  * })
  * ```
  */
-export const methodOverride = (options: MethodOverrideOptions): MiddlewareHandler =>
+export const methodOverride = (options: MethodOverrideOptions): InternalMiddlewareHandler =>
   async function methodOverride(c, next) {
     if (c.req.method === 'GET') {
       return await next()

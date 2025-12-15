@@ -3,7 +3,7 @@
  * Logger Middleware for Hono.
  */
 
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 import { getColorEnabledAsync } from '../../utils/color'
 
 enum LogPrefix {
@@ -68,7 +68,7 @@ async function log(
  * @see {@link https://hono.dev/docs/middleware/builtin/logger}
  *
  * @param {PrintFunc} [fn=console.log] - Optional function for customized logging behavior.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -78,7 +78,7 @@ async function log(
  * app.get('/', (c) => c.text('Hello Hono!'))
  * ```
  */
-export const logger = (fn: PrintFunc = console.log): MiddlewareHandler => {
+export const logger = (fn: PrintFunc = console.log): InternalMiddlewareHandler => {
   return async function logger(c, next) {
     const { method, url } = c.req
 

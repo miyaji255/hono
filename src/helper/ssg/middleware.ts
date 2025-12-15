@@ -1,5 +1,5 @@
 import type { Context } from '../../context'
-import type { Env, MiddlewareHandler } from '../../types'
+import type { Env, InternalMiddlewareHandler } from '../../types'
 import { isDynamicRoute } from './utils'
 
 export const SSG_CONTEXT = 'HONO_SSG_CONTEXT'
@@ -29,8 +29,8 @@ export type SSGParams = SSGParam[]
 interface SSGParamsMiddleware {
   <E extends Env = Env>(
     generateParams: (c: Context<E>) => SSGParams | Promise<SSGParams>
-  ): MiddlewareHandler<E>
-  <E extends Env = Env>(params: SSGParams): MiddlewareHandler<E>
+  ): InternalMiddlewareHandler<E>
+  <E extends Env = Env>(params: SSGParams): InternalMiddlewareHandler<E>
 }
 
 export type AddedSSGDataRequest = Request & {
@@ -60,7 +60,7 @@ export const isSSGContext = (c: Context): boolean => !!c.env?.[SSG_CONTEXT]
  * `disableSSG` is an experimental feature.
  * The API might be changed.
  */
-export const disableSSG = (): MiddlewareHandler =>
+export const disableSSG = (): InternalMiddlewareHandler =>
   async function disableSSG(c, next) {
     if (isSSGContext(c)) {
       c.header(X_HONO_DISABLE_SSG_HEADER_KEY, 'true')
@@ -74,7 +74,7 @@ export const disableSSG = (): MiddlewareHandler =>
  * `onlySSG` is an experimental feature.
  * The API might be changed.
  */
-export const onlySSG = (): MiddlewareHandler =>
+export const onlySSG = (): InternalMiddlewareHandler =>
   async function onlySSG(c, next) {
     if (!isSSGContext(c)) {
       return c.notFound()

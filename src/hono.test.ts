@@ -10,7 +10,7 @@ import { poweredBy } from './middleware/powered-by'
 import { RegExpRouter } from './router/reg-exp-router'
 import { SmartRouter } from './router/smart-router'
 import { TrieRouter } from './router/trie-router'
-import type { Handler, MiddlewareHandler, Next } from './types'
+import type { Handler, InternalMiddlewareHandler, Next } from './types'
 import type { Equal, Expect } from './utils/types'
 import { getPath } from './utils/url'
 
@@ -2872,7 +2872,7 @@ describe('c.var - with testing types', () => {
   }>()
 
   const mw =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo: (str: string) => string
       }
@@ -2883,7 +2883,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw2 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo2: (str: string) => string
       }
@@ -2894,7 +2894,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw3 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo3: (str: string) => string
       }
@@ -2905,7 +2905,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw4 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo4: (str: string) => string
       }
@@ -2916,7 +2916,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw5 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo5: (str: string) => string
       }
@@ -2927,7 +2927,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw6 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo6: (str: string) => string
       }
@@ -2938,7 +2938,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw7 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo7: (str: string) => string
       }
@@ -2949,7 +2949,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw8 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo8: (str: string) => string
       }
@@ -2960,7 +2960,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw9 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo9: (str: string) => string
       }
@@ -2971,7 +2971,7 @@ describe('c.var - with testing types', () => {
     }
 
   const mw10 =
-    (): MiddlewareHandler<{
+    (): InternalMiddlewareHandler<{
       Variables: {
         echo10: (str: string) => string
       }

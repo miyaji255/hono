@@ -5,7 +5,7 @@
 
 import type { Context } from '../../context'
 import { HTTPException } from '../../http-exception'
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 export type HTTPExceptionFunction = (context: Context) => HTTPException
 
@@ -18,7 +18,7 @@ const defaultTimeoutException = new HTTPException(504, {
  *
  * @param {number} duration - The timeout duration in milliseconds.
  * @param {HTTPExceptionFunction | HTTPException} [exception=defaultTimeoutException] - The exception to throw when the timeout occurs. Can be a function that returns an HTTPException or an HTTPException object.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -38,7 +38,7 @@ const defaultTimeoutException = new HTTPException(504, {
 export const timeout = (
   duration: number,
   exception: HTTPExceptionFunction | HTTPException = defaultTimeoutException
-): MiddlewareHandler => {
+): InternalMiddlewareHandler => {
   return async function timeout(context, next) {
     let timer: number | undefined
     const timeoutPromise = new Promise<void>((_, reject) => {

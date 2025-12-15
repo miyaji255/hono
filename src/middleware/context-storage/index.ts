@@ -5,7 +5,7 @@
 
 import { AsyncLocalStorage } from 'node:async_hooks'
 import type { Context } from '../../context'
-import type { Env, MiddlewareHandler } from '../../types'
+import type { Env, InternalMiddlewareHandler } from '../../types'
 
 const asyncLocalStorage = new AsyncLocalStorage<Context>()
 
@@ -14,7 +14,7 @@ const asyncLocalStorage = new AsyncLocalStorage<Context>()
  *
  * @see {@link https://hono.dev/docs/middleware/builtin/context-storage}
  *
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -40,7 +40,7 @@ const asyncLocalStorage = new AsyncLocalStorage<Context>()
  * }
  * ```
  */
-export const contextStorage = (): MiddlewareHandler => {
+export const contextStorage = (): InternalMiddlewareHandler => {
   return async function contextStorage(c, next) {
     await asyncLocalStorage.run(c, next)
   }

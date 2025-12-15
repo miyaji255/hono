@@ -3,7 +3,7 @@
  * Pretty JSON Middleware for Hono.
  */
 
-import type { MiddlewareHandler } from '../../types'
+import type { InternalMiddlewareHandler } from '../../types'
 
 interface PrettyOptions {
   /**
@@ -31,7 +31,7 @@ interface PrettyOptions {
  * @see {@link https://hono.dev/docs/middleware/builtin/pretty-json}
  *
  * @param options - The options for the pretty JSON middleware.
- * @returns {MiddlewareHandler} The middleware handler function.
+ * @returns {InternalMiddlewareHandler} The middleware handler function.
  *
  * @example
  * ```ts
@@ -43,7 +43,7 @@ interface PrettyOptions {
  * })
  * ```
  */
-export const prettyJSON = (options?: PrettyOptions): MiddlewareHandler => {
+export const prettyJSON = (options?: PrettyOptions): InternalMiddlewareHandler => {
   const targetQuery = options?.query ?? 'pretty'
   return async function prettyJSON(c, next) {
     const pretty = options?.force || c.req.query(targetQuery) || c.req.query(targetQuery) === ''
